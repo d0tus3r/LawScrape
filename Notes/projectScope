@@ -1,0 +1,20 @@
+LawScrape
+
+Given a list of articles and comments from various law journals:
+
+Extract:
+	Title
+	Author(s) - first name, last name, middle initial, suffix if possible
+	journal
+	abstract
+	volume #
+	issue #
+	first page
+	year
+	path to pdf
+	document type - article / comment / symposium?
+
+
+Generate:
+	XML file using the document-schema provided.
+	
