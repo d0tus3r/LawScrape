@@ -52,8 +52,11 @@ for link in html.find_all('a'):
     pdfUrl = link.get('href')
     if "pdf" in pdfUrl:
         newUrl = stripPdfUrl(pdfUrl)
+        print("PDF Url")
         print(rootUrl + newUrl)
 
+#print("Document Type")
+#print 
 
 getVolume(argv[1])
 
