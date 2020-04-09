@@ -10,6 +10,22 @@ def getVolume(url):
     print (urlList[5].replace("-", " "))
     print (urlList[6].replace("-", " "))
 
+def getRootUrl(url):
+    urlList = url.split("/")
+    rootUrl = urlList[0] + "/" + urlList[1] + "/" + urlList[2] + "/" + urlList[3] + "/"
+    return rootUrl
+
+def stripPdfUrl(url):
+    urlList = url.split("/")
+    newString = ""
+    for x in urlList:
+        if x != "..":
+            newString.join(x)
+            newString = newString + x + "/"
+    return newString
+
+rootUrl = getRootUrl(argv[1])
+
 for link in html.find_all('meta'):
    
     if link.get('property') == 'og:title':
@@ -31,6 +47,13 @@ for link in html.find_all('meta'):
         print("First Page")
         print(link.get('content'))
         print("")
+
+for link in html.find_all('a'):
+    pdfUrl = link.get('href')
+    if "pdf" in pdfUrl:
+        newUrl = stripPdfUrl(pdfUrl)
+        print(rootUrl + newUrl)
+
 
 getVolume(argv[1])
 
