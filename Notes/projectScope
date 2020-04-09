@@ -1,7 +1,7 @@
 LawScrape
 
 Given a list of articles and comments from various law journals:
-
+https://law.emory.edu/academics/journals/index.html
 Extract:
 	Title
 	Author(s) - first name, last name, middle initial, suffix if possible
