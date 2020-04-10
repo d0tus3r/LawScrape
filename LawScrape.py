@@ -2,13 +2,17 @@ import urllib.request
 from bs4 import BeautifulSoup
 from sys import argv
 
+# Refactor to pull urls from a text document
 page = urllib.request.urlopen(argv[1])
 html = BeautifulSoup(page.read(), "html.parser")
 
-def getVolume(url):
+
+def getVolumeIssue(url):
     urlList = url.split("/")
-    print (urlList[5].replace("-", " "))
-    print (urlList[6].replace("-", " "))
+    print (urlList[5].replace("-", "\n"))
+    print("")
+    print (urlList[6].replace("-", "\n"))
+    print("")
 
 def getRootUrl(url):
     urlList = url.split("/")
@@ -20,22 +24,43 @@ def stripPdfUrl(url):
     newString = ""
     for x in urlList:
         if x != "..":
-            newString.join(x)
             newString = newString + x + "/"
     return newString
 
+def getTitle(title):
+    title = title[0 : (title.find("|") - 1)]
+    return title
+
+def getNames(author):
+    authorNames = author.split(' ')
+    return authorNames
+
+def getAuthor(author):
+    #Daniel B. Rodriguez, Mathew D. McCubbins, Barry R. Weingast
+    #check to see if paper has multiple authors
+    if author.find(',') != -1:
+        multiAuthorList = [x.strip() for x in author.split(',')]
+        for authors in range(len(multiAuthorList)):
+            print(getNames(multiAuthorList[authors]))
+    else:
+        print(getNames(author))
+#continue work on author names
+
+
 rootUrl = getRootUrl(argv[1])
 
+
 for link in html.find_all('meta'):
-   
+
     if link.get('property') == 'og:title':
         print("Title")
-        print(link.get('content'))
+        print(getTitle(link.get('content')))
         print("")
 
     if link.get('name') == 'author':
         print("Author")
-        print(link.get('content'))
+        getAuthor(link.get('content'))
+        #print(link.get('content'))
         print("")
 
     if link.get('property') == 'og:description':
@@ -55,10 +80,8 @@ for link in html.find_all('a'):
         print("PDF Url")
         print(rootUrl + newUrl)
 
+print("") #temp line break for readability
 #print("Document Type")
-#print 
+#print
 
-getVolume(argv[1])
-
-
-
+getVolumeIssue(argv[1])
