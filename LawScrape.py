@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import urllib.request
 from bs4 import BeautifulSoup
 from sys import argv
@@ -6,6 +8,15 @@ from sys import argv
 page = urllib.request.urlopen(argv[1])
 html = BeautifulSoup(page.read(), "html.parser")
 
+
+#open file containing journal urls to parse
+def getURL():
+    f = open('urls')
+    urllist = []
+    for line in f:
+        print("Parsing url: " + line)
+        urlList.append(line)
+    return urlList
 
 def getVolumeIssue(url):
     urlList = url.split("/")
