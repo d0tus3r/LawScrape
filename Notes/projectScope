@@ -17,4 +17,19 @@ Extract:
 
 Generate:
 	XML file using the document-schema provided.
-	
+
+
+	Entries required for csv
+	title
+	fulltext_url
+	abstract
+	author1_fname
+	author1_mname
+	author1_lname
+	author1_suffix
+	{author2-4 same format}
+	document_type
+	issue
+	volume
+	journal
+	first_page

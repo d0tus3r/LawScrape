@@ -110,38 +110,12 @@ def parseDocument(url):
     print(journals)
     return journals
 
-#First pass @ generating csv
-#generate csv off dictionary
-'''def generateCSV(journalDict):
-    journalColumns = ['title', 'journal']
-    journalFile = "journals.csv"
-
-    try:
-        with open(journalFile, 'w') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=journalColumns)
-            writer.writeheader()
-            for data in journalDict:
-                writer.writerow(data)
-    except IOError:
-        print("Error: I/O")
-'''
-
-
-
-
-
 urlList = getURL()
+#list of dictionary entries for later CSV generation
+journalList = []
 
 for url in urlList:
     journal = parseDocument(url)
+    journalList.append(journal)
 
-    journalColumns = ['title', 'journal']
-    journalFile = "journals.csv"
-
-    r=zip(*rows.values())
-
-    with open(journalFile, 'w') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(journalColumns)
-        for d in r:
-            writer.writerow(d)
+print(journalList)
