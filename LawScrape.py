@@ -1,5 +1,6 @@
 import urllib.request
 from bs4 import BeautifulSoup
+import csv
 
 #All print statements are for proof of concept, will be turned into xml doc upon completion
 
@@ -67,7 +68,8 @@ def parseDocument(url):
 
         if link.get('property') == 'og:title':
             print("Title")
-            print(getTitle(link.get('content')))
+            title = getTitle(link.get('content'))
+            print(title)
             print("")
 
         if link.get('name') == 'author':
@@ -103,8 +105,43 @@ def parseDocument(url):
     journal = getJournal(url)
     print(journal)
 
+    #test for journal dsv
+    journals = {'title': title, 'journal': journal}
+    print(journals)
+    return journals
+
+#First pass @ generating csv
+#generate csv off dictionary
+'''def generateCSV(journalDict):
+    journalColumns = ['title', 'journal']
+    journalFile = "journals.csv"
+
+    try:
+        with open(journalFile, 'w') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=journalColumns)
+            writer.writeheader()
+            for data in journalDict:
+                writer.writerow(data)
+    except IOError:
+        print("Error: I/O")
+'''
+
+
+
+
 
 urlList = getURL()
 
 for url in urlList:
-    parseDocument(url)
+    journal = parseDocument(url)
+
+    journalColumns = ['title', 'journal']
+    journalFile = "journals.csv"
+
+    r=zip(*rows.values())
+
+    with open(journalFile, 'w') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(journalColumns)
+        for d in r:
+            writer.writerow(d)
