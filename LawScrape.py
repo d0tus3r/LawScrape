@@ -18,7 +18,22 @@ def getIssue(url):
 
 #placeholder
 def getDocumentType(url):
-    return false
+    urlList = url.split("/")
+    document_type = ""
+    if urlList[7] == "articles":
+        document_type = "article"
+    elif urlList[7] == "comments":
+        document_type = "comment"
+    elif urlList[7] == "articles-essays":
+        document_type = ""
+    elif urlList[7] == "foreword":
+        document_type = "foreword"
+    elif "symposium" in urlList[7]:
+        document_type = "symposium"
+    else:
+        document_type = ""
+
+    return document_type
 
 def getRootUrl(url):
     urlList = url.split("/")
@@ -45,7 +60,15 @@ def getJournal(url):
     urlList = url.split("/")
     if urlList[3] == "elj":
         journal = "Emory Law Journal"
-        return journal
+    elif urlList[3] == "ebdj":
+        journal = "Emory Bankruptcy Developments Journal"
+    elif urlList[3] == "ecgar":
+        journal = "Emory Corporate Governance and Accountability Review"
+    elif urlList[3] == "eilr":
+        journal = "Emory International Law Review"
+    else:
+        journal = ""
+    return journal
 
 def getAuthor(author):
     #Daniel B. Rodriguez, Mathew D. McCubbins, Barry R. Weingast
@@ -85,8 +108,9 @@ def parseDocument(url):
     volume = getVolume(url)
     issue = getIssue(url)
     journalName = getJournal(url)
-
-    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'issue': issue, 'volume': volume, 'journal': journalName, 'first_page': first_page}
+    original_url = url
+    document_type = getDocumentType(url)
+    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'document_type': document_type, 'issue': issue, 'volume': volume, 'journal': journalName, 'first_page': first_page, 'orginal_url': original_url}
     return journal
 
 urlList = getURL()

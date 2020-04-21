@@ -18,6 +18,8 @@ symposium: 	https://law.emory.edu/elj/content/volume-60/issue-2/thrower-symposiu
 
 foreword: https://law.emory.edu/elj/content/volume-61/issue-special/foreword/in-memoriam-david-j-bederman.html
 
+https://law.emory.edu/elj/content/volume-59/issue-2/articles-essays/interdependent-relationship-internal-external-separation-powers.html
+
 https://law.emory.edu/elj/content/volume-67/issue-1/index.html
 ^ parse this page for article / comment urls
 
@@ -34,9 +36,9 @@ Generate:
 	author1_lname
 	author1_suffix
 	{author2-4 same format}
-	document_type
+	document_type						x
 	issue										x
 	volume									x
 	journal									x
 	first_page							x
-	original_url
+	original_url						x
