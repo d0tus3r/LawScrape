@@ -14,22 +14,29 @@ Extract:
 	path to pdf
 	document type - article / comment / symposium? / essays / foreword
 
+symposium: 	https://law.emory.edu/elj/content/volume-60/issue-2/thrower-symposium%20articles/index.html
+
+foreword: https://law.emory.edu/elj/content/volume-61/issue-special/foreword/in-memoriam-david-j-bederman.html
+
+https://law.emory.edu/elj/content/volume-67/issue-1/index.html
+^ parse this page for article / comment urls
 
 Generate:
 	XML file using the document-schema provided.
 
 
 	Entries required for csv
-	title
-	fulltext_url
-	abstract
+	title										x
+	fulltext_url						x
+	abstract								x
 	author1_fname
 	author1_mname
 	author1_lname
 	author1_suffix
 	{author2-4 same format}
 	document_type
-	issue
-	volume
-	journal
-	first_page
+	issue										x
+	volume									x
+	journal									x
+	first_page							x
+	original_url

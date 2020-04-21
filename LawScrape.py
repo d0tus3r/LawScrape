@@ -16,6 +16,10 @@ def getVolume(url):
 def getIssue(url):
     return re.search('issue-([0-9]*)', url).group(1)
 
+#placeholder
+def getDocumentType(url):
+    return false
+
 def getRootUrl(url):
     urlList = url.split("/")
     rootUrl = urlList[0] + "/" + urlList[1] + "/" + urlList[2] + "/" + urlList[3] + "/"
@@ -52,8 +56,6 @@ def getAuthor(author):
             print(getNames(multiAuthorList[authors]))
     else:
         print(getNames(author))
-#continue work on author names
-# Refactor to pull urls from a text document
 
 def parseDocument(url):
     page = urllib.request.urlopen(url)
@@ -77,19 +79,17 @@ def parseDocument(url):
     for link in html.find_all('a'):
         pdfUrl = link.get('href')
         if "pdf" in pdfUrl:
-            newUrl = stripPdfUrl(pdfUrl)
-            print("PDF Url")
-            print(rootUrl + newUrl)
+            fullTextUrl = stripPdfUrl(pdfUrl)
+            fullTextUrl = rootUrl + fullTextUrl[:-1]
 
     volume = getVolume(url)
     issue = getIssue(url)
     journalName = getJournal(url)
 
-    journal = {'title': title, 'journal': journalName, 'abstract': abstract, 'volume': volume, 'issue': issue}
+    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'issue': issue, 'volume': volume, 'journal': journalName, 'first_page': first_page}
     return journal
 
 urlList = getURL()
-#list of dictionary entries for later CSV generation
 journalList = []
 
 for url in urlList:
