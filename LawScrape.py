@@ -1,8 +1,6 @@
 import urllib.request
 from bs4 import BeautifulSoup
-import csv
-
-#All print statements are for proof of concept, will be turned into xml doc upon completion
+import re
 
 #open file containing journal urls to parse
 def getURL():
@@ -12,12 +10,11 @@ def getURL():
         urlList.append(line)
     return urlList
 
-def getVolumeIssue(url):
-    urlList = url.split("/")
-    print (urlList[5].replace("-", "\n"))
-    print("")
-    print (urlList[6].replace("-", "\n"))
-    print("")
+def getVolume(url):
+    return re.search('volume-([0-9]*)', url).group(1)
+
+def getIssue(url):
+    return re.search('issue-([0-9]*)', url).group(1)
 
 def getRootUrl(url):
     urlList = url.split("/")
@@ -59,7 +56,6 @@ def getAuthor(author):
 # Refactor to pull urls from a text document
 
 def parseDocument(url):
-    #open url from list
     page = urllib.request.urlopen(url)
     html = BeautifulSoup(page.read(), "html.parser")
     rootUrl = getRootUrl(url)
@@ -67,26 +63,16 @@ def parseDocument(url):
     for link in html.find_all('meta'):
 
         if link.get('property') == 'og:title':
-            print("Title")
             title = getTitle(link.get('content'))
-            print(title)
-            print("")
 
         if link.get('name') == 'author':
-            print("Author")
-            getAuthor(link.get('content'))
-            #print(link.get('content'))
-            print("")
+            author = getAuthor(link.get('content'))
 
         if link.get('property') == 'og:description':
-            print("Abstract")
-            print(link.get('content'))
-            print("")
+            abstract = link.get('content')
 
         if link.get('name') == 'start-page-number':
-            print("First Page")
-            print(link.get('content'))
-            print("")
+            first_page = link.get('content')
 
     for link in html.find_all('a'):
         pdfUrl = link.get('href')
@@ -95,20 +81,12 @@ def parseDocument(url):
             print("PDF Url")
             print(rootUrl + newUrl)
 
-    print("") #temp line break for readability
-    #print("Document Type")
-    #print
+    volume = getVolume(url)
+    issue = getIssue(url)
+    journalName = getJournal(url)
 
-    getVolumeIssue(url)
-
-    print("Journal")
-    journal = getJournal(url)
-    print(journal)
-
-    #test for journal dsv
-    journals = {'title': title, 'journal': journal}
-    print(journals)
-    return journals
+    journal = {'title': title, 'journal': journalName, 'abstract': abstract, 'volume': volume, 'issue': issue}
+    return journal
 
 urlList = getURL()
 #list of dictionary entries for later CSV generation
