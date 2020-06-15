@@ -88,6 +88,7 @@ def parseDocument(url):
     page = urllib.request.urlopen(url)
     html = BeautifulSoup(page.read(), "html.parser")
     rootUrl = getRootUrl(url)
+    fullTextUrl = ""
 
     for link in html.find_all('meta'):
 
@@ -128,5 +129,3 @@ json_object = json.dumps(journalList, indent=4)
 
 with open('articles.json', 'w') as outfile:
     outfile.write(json_object)
-
-#print(journalList)
