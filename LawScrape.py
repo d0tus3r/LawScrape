@@ -1,6 +1,7 @@
 import urllib.request
 from bs4 import BeautifulSoup
 import re
+import json
 
 #open file containing journal urls to parse
 def getURL():
@@ -76,9 +77,12 @@ def getAuthor(author):
     if author.find(',') != -1:
         multiAuthorList = [x.strip() for x in author.split(',')]
         for authors in range(len(multiAuthorList)):
-            print(getNames(multiAuthorList[authors]))
+            author = (getNames(multiAuthorList[authors]))
+            return author
     else:
-        print(getNames(author))
+        author = (getNames(author))
+        return author
+
 
 def parseDocument(url):
     page = urllib.request.urlopen(url)
@@ -110,7 +114,7 @@ def parseDocument(url):
     journalName = getJournal(url)
     original_url = url
     document_type = getDocumentType(url)
-    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'document_type': document_type, 'issue': issue, 'volume': volume, 'journal': journalName, 'first_page': first_page, 'orginal_url': original_url}
+    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'author': author, 'document_type': document_type, 'issue': issue, 'volume': volume, 'journal': journalName, 'first_page': first_page, 'orginal_url': original_url}
     return journal
 
 urlList = getURL()
@@ -120,4 +124,9 @@ for url in urlList:
     journal = parseDocument(url)
     journalList.append(journal)
 
-print(journalList)
+json_object = json.dumps(journalList, indent=4)
+
+with open('articles.json', 'w') as outfile:
+    outfile.write(json_object)
+
+#print(journalList)
