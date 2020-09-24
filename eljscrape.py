@@ -14,28 +14,32 @@ def getURL():
 def getVolume(url):
     return re.search('volume-([0-9]*)', url).group(1)
 
-def getIssue(url):
-    return re.search('issue-([0-9]*)', url).group(1)
+#def getIssue(url):
+    #return re.search('issue-([0-9]*)', url).group(1)
 
 #placeholder
 def getDocumentType(url):
     urlList = url.split("/")
     document_type = ""
-    if "article" in urlList[7]:
+    if "article" in urlList[6]:
         document_type = "article"
-    elif urlList[7] == "comments":
+    elif urlList[6] == "comments":
         document_type = "comment"
-    elif urlList[7] == "articles-essays":
-        document_type = ""
-    elif urlList[7] == "foreword":
+    elif urlList[6] == "essays":
+        document_type = "essays"
+    elif urlList[6] == "responses":
+        document_type = "responses"
+    elif urlList[6] == "articles-essays":
+        document_type = "essay"
+    elif urlList[6] == "foreword":
         document_type = "foreword"
-    elif "symposium" in urlList[7]:
+    elif "symposium" in urlList[6]:
         document_type = "symposium"
-    elif "tribute" in urlList[7]:
+    elif "tribute" in urlList[6]:
         document_type = "tribute"
-    elif urlList[7] == "note":
+    elif urlList[6] == "note":
         document_type = "note"
-    elif "writing" in urlList[7]:
+    elif "writing" in urlList[6]:
         document_type = "writing award"
     else:
         document_type = ""
@@ -107,8 +111,8 @@ def parseDocument(url):
         if link.get('property') == 'og:description':
             abstract = link.get('content')
 
-        if link.get('name') == 'start-page-number':
-            first_page = link.get('content')
+        #if link.get('name') == 'start-page-number':
+            #first_page = link.get('content')
 
     for link in html.find_all('a'):
         pdfUrl = link.get('href')
@@ -117,11 +121,11 @@ def parseDocument(url):
             fullTextUrl = rootUrl + fullTextUrl[:-1]
 
     volume = getVolume(url)
-    issue = getIssue(url)
+    #issue = getIssue(url)
     journalName = getJournal(url)
     original_url = url
     document_type = getDocumentType(url)
-    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'author': author, 'document_type': document_type, 'issue': issue, 'volume': volume, 'journal': journalName, 'first_page': first_page, 'orginal_url': original_url}
+    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'author': author, 'document_type': document_type, 'volume': volume, 'journal': journalName, 'orginal_url': original_url}
     return journal
 
 urlList = getURL()
