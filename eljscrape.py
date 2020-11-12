@@ -103,6 +103,7 @@ def parseDocument(url):
     html = BeautifulSoup(page.read(), "html.parser")
     rootUrl = getRootUrl(url)
     fullTextUrl = ""
+    first_page = ""
 
     for link in html.find_all('meta'):
 
@@ -115,8 +116,8 @@ def parseDocument(url):
         if link.get('property') == 'og:description':
             abstract = link.get('content')
 
-        #if link.get('name') == 'start-page-number':
-            #first_page = link.get('content')
+        if link.get('name') == 'start-page-number':
+            first_page = link.get('content')
 
     for link in html.find_all('a'):
         pdfUrl = link.get('href')
@@ -129,7 +130,7 @@ def parseDocument(url):
     journalName = getJournal(url)
     original_url = url
     document_type = getDocumentType(url)
-    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'author': author, 'document_type': document_type, 'volume': volume, 'journal': journalName, 'orginal_url': original_url}
+    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'author': author, 'document_type': document_type, 'volume': volume, 'journal': journalName, 'start_page': first_page, 'orginal_url': original_url}
     return journal
 
 urlList = getURL()
