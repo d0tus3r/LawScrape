@@ -41,6 +41,8 @@ def getDocumentType(url):
         document_type = "note"
     elif "writing" in urlList[6]:
         document_type = "writing award"
+    elif "perspectives" in urlList[6]:
+        document_type = "perspectives"
     else:
         document_type = ""
 
@@ -77,6 +79,8 @@ def getJournal(url):
         journal = "Emory Corporate Governance and Accountability Review"
     elif urlList[3] == "eilr":
         journal = "Emory International Law Review"
+    elif urlList[3] == "ecgar":
+        journal = "Emory Corporate Governance and Accountability Review"
     else:
         journal = ""
     return journal
