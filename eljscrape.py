@@ -14,8 +14,8 @@ def getURL():
 def getVolume(url):
     return re.search('volume-([0-9]*)', url).group(1)
 
-#def getIssue(url):
-    #return re.search('issue-([0-9]*)', url).group(1)
+def getIssue(url):
+    return re.search('issue-([0-9]*)', url).group(1)
 
 #placeholder
 def getDocumentType(url):
@@ -31,8 +31,12 @@ def getDocumentType(url):
         document_type = "responses"
     elif urlList[6] == "articles-essays":
         document_type = "essay"
+    elif urlList[6] == "essays-interviews":
+        document_type = "essays-interviews"
     elif urlList[6] == "foreword":
         document_type = "foreword"
+    elif urlList[6] == "afterword":
+        document_type = "afterword"
     elif "symposium" in urlList[6]:
         document_type = "symposium"
     elif "tribute" in urlList[6]:
@@ -126,11 +130,11 @@ def parseDocument(url):
             fullTextUrl = rootUrl + fullTextUrl[:-1]
 
     volume = getVolume(url)
-    #issue = getIssue(url)
+    issue = getIssue(url)
     journalName = getJournal(url)
     original_url = url
     document_type = getDocumentType(url)
-    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'author': author, 'document_type': document_type, 'volume': volume, 'journal': journalName, 'start_page': first_page, 'orginal_url': original_url}
+    journal = {'title': title, 'fulltext_url': fullTextUrl, 'abstract': abstract, 'author': author, 'document_type': document_type, 'volume': volume, 'issue': issue, 'journal': journalName, 'start_page': first_page, 'orginal_url': original_url}
     return journal
 
 urlList = getURL()
