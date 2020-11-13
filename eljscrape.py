@@ -23,25 +23,25 @@ def getDocumentType(url):
     document_type = ""
     if "article" in urlList[6]:
         document_type = "article"
-    elif urlList[6] == "comments":
+    elif "comments" in urlList[6]:
         document_type = "comment"
-    elif urlList[6] == "essays":
+    elif "essays" in urlList[6]:
         document_type = "essays"
-    elif urlList[6] == "responses":
+    elif "responses" in urlList[6]:
         document_type = "responses"
-    elif urlList[6] == "articles-essays":
+    elif "articles-essays" in urlList[6]:
         document_type = "essay"
-    elif urlList[6] == "essays-interviews":
+    elif "essays-interviews" in urlList[6]:
         document_type = "essays-interviews"
-    elif urlList[6] == "foreword":
+    elif "foreword" in urlList[6]:
         document_type = "foreword"
-    elif urlList[6] == "afterword":
+    elif "afterword" in urlList[6]:
         document_type = "afterword"
     elif "symposium" in urlList[6]:
         document_type = "symposium"
     elif "tribute" in urlList[6]:
         document_type = "tribute"
-    elif urlList[6] == "note":
+    elif "note" in urlList[6]:
         document_type = "note"
     elif "writing" in urlList[6]:
         document_type = "writing award"
@@ -108,6 +108,7 @@ def parseDocument(url):
     rootUrl = getRootUrl(url)
     fullTextUrl = ""
     first_page = ""
+    author = ""
 
     for link in html.find_all('meta'):
 
@@ -141,6 +142,7 @@ urlList = getURL()
 journalList = []
 
 for url in urlList:
+    print(url)
     journal = parseDocument(url)
     journalList.append(journal)
 
